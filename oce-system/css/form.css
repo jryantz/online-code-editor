@@ -1,0 +1,133 @@
+@charset "UTF-8";
+
+input[type="submit"] {
+    background:none;
+    border:solid 2px #21a1e1;
+    color:#21a1e1;
+    padding:15px 40px;
+    font-size:15px;
+    display:inline-block;
+    cursor:pointer;
+}
+
+input[type="submit"]:active {
+    color:white;
+    background:#21a1e1;
+}
+
+form.slideout {
+    display:table;
+    margin:5px auto;
+}
+
+form.slideout input {
+    background:none;
+    border:solid 2px #21a1e1;
+    color:#21a1e1;
+    padding:15px 40px;
+    font-size:15px;
+    display:inline-block;
+}
+
+form.slideout input:focus, form.slideout input:active {
+    outline:none;
+}
+
+form.slideout input[type="text"], form.slideout input[type="password"] {
+    border:none;
+    border-bottom:solid 2px #21a1e1;
+}
+
+form.slideout .input-group {
+    margin:25px 10px 25px 0;
+    position:relative;
+}
+
+form.slideout .input-group input {
+    padding:15px 10px;
+}
+
+form.slideout .input-group label {
+    position:absolute;
+    top:50%;
+    left:10px;
+    transform:translateY(-50%);
+    font-style:italic;
+    color:#999;
+    pointer-events:none;
+    transition:all 0.15s ease-out 0s;
+}
+
+form.slideout .input-group input:focus + label, form.slideout .input-group input.has-value + label {
+    top:0px;
+    font-size:12px;
+    color:#aaa;
+}
+
+form div.selector {
+    border:0;
+    color:white;
+    font-weight:bold;
+    padding:0;
+    position:relative;
+    top:10px;
+    width:300px;
+}
+
+form div.selector input[type="radio"] {
+    opacity:0;
+    position:absolute;
+}
+
+form div.selector label {
+    color:#dedede;
+    cursor:pointer;
+    float:left;
+    margin-top:2px;
+    padding:5px 0 3px 0;
+    position:relative;
+    text-align:center;
+    width:16.6%;
+    z-index:2;
+}
+
+form div.selector input[type="radio"]:checked + label {
+    color:#6b6b6b;
+    transition:all 0.4s ease-in 0s;
+}
+
+form div.selector input[type="radio"]:focus + label {
+    background-color:#ededed;
+    transition:all 0.4s ease-in 0s;
+}
+
+form div.selector .switch {
+    border-bottom:solid 1px #6b6b6b;
+    clear:both;
+    height:100%;
+    left:-1px;
+    margin:2px;
+    position:absolute;
+    top:0;
+    transition:all 0.3s ease-out;
+    z-index:1;
+    width:16%;
+}
+
+form div.selector input[type="radio"]:last-of-type:checked ~ .switch {
+    left:25%;
+}
+
+form div.selector input[type="radio"]:checked:nth-of-type(2) ~ .switch {
+    left:16.6%;
+}
+
+form div.selector input[type="radio"]:checked:last-of-type ~ .switch {
+    left:16.26%;
+}
+
+@media screen and (max-width:500px) {
+    input[type="submit"], form.slideout input[type="submit"] {
+        padding:5px 13px;
+    }
+}
