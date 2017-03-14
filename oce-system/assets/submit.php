@@ -4,17 +4,17 @@ session_start();
 if(isset($_POST['loginSubmit'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
-    
+
     if(file_exists('users/' . $username . '.php')) {
         $handle = fopen('users/' . $username . '.php', 'r');
         if(filesize('users/' . $username . '.php') > 0) {
             $fileContent = fread($handle, filesize('users/' . $username . '.php'));
         }
         fclose($handle);
-        
+
         $salt = substr($username, 0, 4) . substr($password, 0, 5) . substr($username, -4) . substr($password, -5);
         $hash = hash('sha512', $salt . $password . $salt);
-        
+
         if($hash == $fileContent) {
             $_SESSION['user'] = $username;
             header('Location: .././');
@@ -39,11 +39,11 @@ if(isset($_GET['logout'])) {
 
 if(isset($_POST['submitNewUser'])) {
     $user = $_POST['newUser'];
-    
+
     $tempPass = 'password';
     $salt = substr($user, 0, 4) . substr($tempPass, 0, 5) . substr($user, -4) . substr($tempPass, -5);
     $tempPass = hash('sha512', $salt . $tempPass . $salt);
-    
+
     if(!file_exists('users/' . $user . '.php')) {
         $handle = fopen('users/' . $user . '.php', 'x');
         fwrite($handle, $tempPass);
@@ -59,23 +59,23 @@ if(isset($_POST['changePass'])) {
     $oldPass = $_POST['oldPass'];
     $newPass = $_POST['newPass'];
     $newPassAgain = $_POST['newPassAgain'];
-    
+
     $username = $_SESSION['user'];
-    
+
     if($newPass == $newPassAgain) {
         if(file_exists('users/' . $username . '.php')) {
             $handle = fopen('users/' . $username . '.php', 'r');
             if(filesize('users/' . $username . '.php') > 0) {
                 $fileContent = fread($handle, filesize('users/' . $username . '.php'));
-                
+
                 $salt = substr($username, 0, 4) . substr($oldPass, 0, 5) . substr($username, -4) . substr($oldPass, -5);
                 $oldPass = hash('sha512', $salt . $oldPass . $salt);
             }
             fclose($handle);
-            
+
             $salt = substr($username, 0, 4) . substr($newPass, 0, 5) . substr($username, -4) . substr($newPass, -5);
             $newPass = hash('sha512', $salt . $newPass . $salt);
-            
+
             if($oldPass == $fileContent) {
                 $handle = fopen('users/' . $username . '.php', 'w+');
                 fwrite($handle, $newPass);
@@ -100,7 +100,7 @@ if(isset($_POST['changePass'])) {
 if(isset($_POST['saveAndClose'])) {
     $file = $_POST['file'];
     $data = $_POST['code'];
-    
+
     if(file_exists('../../project_active' . $file)) {
         $unlink = unlink('../../project_active' . $file);
     }
@@ -115,23 +115,23 @@ if(isset($_POST['saveAndClose'])) {
 if(isset($_POST['delete'])) {
     require_once '../classes/recurse.php';
     $recurse = new recurse;
-    
+
     if(is_dir($_POST['file'])) {
         $recurse->r_delete('../../project' . $_POST['file']);
         $recurse->r_delete('../../project_active' . $_POST['file']);
     } else {
         $recurse->r_delete('../../project' . $_POST['file']);
     }
-    
+
     header('Location: .././');
 }
 
 if(isset($_POST['submitVersion'])) {
     require_once '../classes/recurse.php';
     $recurse = new recurse;
-    
+
     $recurse->r_copy('../../project', '../../project_versions/' . $_POST['version']);
-    
+
     header('Location: .././');
 }
 
